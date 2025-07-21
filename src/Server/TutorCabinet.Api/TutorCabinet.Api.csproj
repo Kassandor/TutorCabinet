@@ -9,11 +9,11 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TutorCabinet.Application\TutorCabinet.Application.csproj" />
       <ProjectReference Include="..\TutorCabinet.Infrastructure\TutorCabinet.Infrastructure.csproj" />
     </ItemGroup>
 

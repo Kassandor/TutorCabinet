@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TutorCabinet.Infrastructure.Data;
+using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Infrastructure.Data.Contexts;
+using TutorCabinet.Infrastructure.ExternalServices;
 
 namespace TutorCabinet.Api;
 
@@ -9,6 +11,8 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
+        var environment = builder.Environment;
+
         // Add services to the container.
         builder.Services.AddAuthorization();
         builder.Services.AddControllers();
@@ -16,8 +20,11 @@ public static class Program
         {
             options.UseNpgsql(configuration.GetConnectionString("PgDatabase"));
         });
+        
+        // Hasher паролей
+        builder.Services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
 
-        if (builder.Environment.IsDevelopment())
+        if (environment.IsDevelopment())
         {
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -31,7 +38,7 @@ public static class Program
         app.UseAuthorization();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (environment.IsDevelopment())
         {
             app.MapOpenApi();
             app.UseSwagger();
