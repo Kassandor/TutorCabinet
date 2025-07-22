@@ -40,6 +40,7 @@ public class UserRepository(PgDbContext db) : IUserRepository
             CreatedAt = user.CreatedAt
         };
         await db.Users.AddAsync(entity, cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)

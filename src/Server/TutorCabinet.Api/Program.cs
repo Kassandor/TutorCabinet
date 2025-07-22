@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Application.Services;
 using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Infrastructure.Data.Contexts;
 using TutorCabinet.Infrastructure.ExternalServices;
+using TutorCabinet.Infrastructure.Repositories;
 
 namespace TutorCabinet.Api;
 
@@ -20,7 +23,14 @@ public static class Program
         {
             options.UseNpgsql(configuration.GetConnectionString("PgDatabase"));
         });
-        
+
+        // Services
+        builder.Services.AddScoped<IUserService, UserService>();
+
+        // Repositories
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+        // External Services
         // Hasher паролей
         builder.Services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
 
