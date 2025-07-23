@@ -5,13 +5,13 @@ using TutorCabinet.Core.ValueObjects;
 using TutorCabinet.Infrastructure.Data.Contexts;
 using TutorCabinet.Infrastructure.Data.Models;
 
-namespace TutorCabinet.Infrastructure.Repositories;
+namespace TutorCabinet.Infrastructure.Data.Repositories;
 
 /// <summary>
 /// <inheritdoc cref="IUserRepository"/>
 /// </summary>
 /// <param name="db">Контекст базы данных <see cref="PgDbContext"/></param>
-public class UserRepository(PgDbContext db) : IUserRepository
+public class UserRepository(AppDbContext db) : IUserRepository
 {
     public async Task<List<User>?> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -52,7 +52,6 @@ public class UserRepository(PgDbContext db) : IUserRepository
             PasswordHash = user.PasswordHash
         };
         await db.Users.AddAsync(entity, cancellationToken);
-        await db.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)

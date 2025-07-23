@@ -2,9 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Application.Services;
 using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Infrastructure.Data;
 using TutorCabinet.Infrastructure.Data.Contexts;
+using TutorCabinet.Infrastructure.Data.Repositories;
 using TutorCabinet.Infrastructure.ExternalServices;
-using TutorCabinet.Infrastructure.Repositories;
 
 namespace TutorCabinet.Api;
 
@@ -12,20 +13,21 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        // DI container, configuration, environment
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
         var environment = builder.Environment;
-
-        // Add services to the container.
+        
         builder.Services.AddAuthorization();
         builder.Services.AddControllers();
-        builder.Services.AddDbContext<PgDbContext>(options =>
+        builder.Services.AddDbContext<AppDbContext, PgDbContext>(options =>
         {
             options.UseNpgsql(configuration.GetConnectionString("PgDatabase"));
         });
 
-        // Services
+        // Internal Services
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<ICommitterService, CommitterService>();
 
         // Repositories
         builder.Services.AddScoped<IUserRepository, UserRepository>();
