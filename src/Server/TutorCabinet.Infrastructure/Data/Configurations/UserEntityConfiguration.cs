@@ -4,6 +4,9 @@ using TutorCabinet.Infrastructure.Data.Models;
 
 namespace TutorCabinet.Infrastructure.Data.Configurations;
 
+/// <summary>
+/// Конфигурация <see cref="UserEntity"/> в базе данных
+/// </summary>
 public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)

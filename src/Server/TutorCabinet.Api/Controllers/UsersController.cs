@@ -2,22 +2,23 @@ using Microsoft.AspNetCore.Mvc;
 using TutorCabinet.Api.Models;
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Core.Entities;
 
 namespace TutorCabinet.Api.Controllers;
 
 /// <summary>
-/// Контроллер для сущности User
+/// Контроллер для сущности <see cref="User"/>
 /// </summary>
-/// <param name="userService">Сервис пользователя</param>
+/// <param name="userService"><see cref="IUserService"/></param>
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController(IUserService userService) : ControllerBase
 {
     /// <summary>
-    /// Получение пользователя по id
+    /// API для получения <see cref="User"/> по переданному id
     /// </summary>
-    /// <param name="id">guid</param>
-    /// <param name="cancellationToken">Токен отмены</param>
+    /// <param name="id"><see cref="Guid"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<UserResponse>> Get(Guid id, CancellationToken cancellationToken)
@@ -33,10 +34,10 @@ public class UsersController(IUserService userService) : ControllerBase
     }
 
     /// <summary>
-    /// Создание пользователя
+    /// API для создания <see cref="User"/> по id
     /// </summary>
-    /// <param name="req">Request DTO</param>
-    /// <param name="cancellationToken">Токен отмены</param>
+    /// <param name="req"><see cref="CreateUserDto"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] CreateUserRequest req, CancellationToken cancellationToken)

@@ -2,6 +2,9 @@ using TutorCabinet.Core.Interfaces;
 
 namespace TutorCabinet.Infrastructure.ExternalServices;
 
+/// <summary>
+/// <inheritdoc cref="IPasswordHasher"/>
+/// </summary>
 public class BCryptPasswordHasher : IPasswordHasher
 {
     public string Hash(string password)

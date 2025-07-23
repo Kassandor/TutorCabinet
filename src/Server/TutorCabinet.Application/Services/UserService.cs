@@ -5,7 +5,11 @@ using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Core.ValueObjects;
 
 namespace TutorCabinet.Application.Services;
-
+/// <summary>
+/// <inheritdoc cref="IUserService"/>
+/// </summary>
+/// <param name="repo"><see cref="IUserRepository"/></param>
+/// <param name="hasher"><see cref="IPasswordHasher"/></param>
 public class UserService(IUserRepository repo, IPasswordHasher hasher) : IUserService
 {
     public async Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken)

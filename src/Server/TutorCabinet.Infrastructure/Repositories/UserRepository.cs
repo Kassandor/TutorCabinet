@@ -7,6 +7,10 @@ using TutorCabinet.Infrastructure.Data.Models;
 
 namespace TutorCabinet.Infrastructure.Repositories;
 
+/// <summary>
+/// <inheritdoc cref="IUserRepository"/>
+/// </summary>
+/// <param name="db">Контекст базы данных <see cref="PgDbContext"/></param>
 public class UserRepository(PgDbContext db) : IUserRepository
 {
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

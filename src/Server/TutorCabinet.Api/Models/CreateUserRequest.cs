@@ -1,7 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using TutorCabinet.Core.Entities;
 
 namespace TutorCabinet.Api.Models;
 
+/// <summary>
+/// API-запрос создания <see cref="User"/>
+/// </summary>
 public class CreateUserRequest
 {
     [Required, EmailAddress] public string Email { get; set; }

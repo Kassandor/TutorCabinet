@@ -1,5 +1,8 @@
 namespace TutorCabinet.Core.ValueObjects;
 
+/// <summary>
+/// Значимый объект Email
+/// </summary>
 public sealed class Email : IEquatable<Email>
 {
     public string Address { get; }
