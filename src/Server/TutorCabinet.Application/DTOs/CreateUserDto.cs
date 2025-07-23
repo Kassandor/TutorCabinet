@@ -7,7 +7,7 @@ namespace TutorCabinet.Application.DTOs;
 /// </summary>
 public class CreateUserDto
 {
-    public string Email { get; set; }
-    public string Name { get; set; }
-    public string Password { get; set; }
+    public required string Email { get; init; }
+    public required string Name { get; init; }
+    public required string Password { get; init; }
 }

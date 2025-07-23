@@ -5,7 +5,7 @@ namespace TutorCabinet.Application.DTOs;
 /// </summary>
 public class UserDto
 {
-    public Guid Id { get; set; }
-    public string Email { get; set; } = null!;
-    public string Name { get; set; } = null!;
+    public Guid Id { get; init; }
+    public required string Email { get; init; }
+    public required string Name { get; init; }
 }
