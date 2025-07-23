@@ -5,6 +5,7 @@ using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Core.ValueObjects;
 
 namespace TutorCabinet.Application.Services;
+
 /// <summary>
 /// <inheritdoc cref="IUserService"/>
 /// </summary>
@@ -29,7 +30,7 @@ public class UserService(IUserRepository repo, IPasswordHasher hasher) : IUserSe
         var usersDto = users.Select(u => new UserDto(u.Id, u.Email.Address, u.Name)).ToList();
         return new UsersListDto(usersDto, usersDto.Count);
     }
-    
+
     public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await repo.GetByIdAsync(id, cancellationToken);

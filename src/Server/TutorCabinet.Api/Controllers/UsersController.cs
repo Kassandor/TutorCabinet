@@ -55,7 +55,9 @@ public class UsersController(IUserService userService) : ControllerBase
     {
         var dto = new CreateUserDto
         {
-            Email = req.Email, Name = req.Name, Password = req.Password
+            Email = req.Email,
+            Name = req.Name,
+            Password = req.Password
         };
         var newId = await userService.CreateAsync(dto, cancellationToken);
         return CreatedAtAction(nameof(Get), new { id = newId }, new UserIdResponse(newId));

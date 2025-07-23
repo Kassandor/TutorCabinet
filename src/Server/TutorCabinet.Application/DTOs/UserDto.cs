@@ -10,4 +10,4 @@ public sealed record UsersListDto(List<UserDto> Users, int TotalCount);
 /// <summary>
 /// DTO пользователя
 /// </summary>
-public sealed record UserDto (Guid Id, string Email, string Name);
+public sealed record UserDto(Guid Id, string Email, string Name);

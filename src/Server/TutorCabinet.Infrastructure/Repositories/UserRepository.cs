@@ -19,7 +19,7 @@ public class UserRepository(PgDbContext db) : IUserRepository
         var users = userEntities.Select(e => new User(e.Id, new Email(e.Email), e.Name));
         return users.ToList();
     }
-    
+
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await db.Users.FindAsync([id], cancellationToken);
