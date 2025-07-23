@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TutorCabinet.Api.Models;
+using TutorCabinet.Api.Models.Users.Requests;
+using TutorCabinet.Api.Models.Users.Responses;
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Core.Entities;
@@ -14,6 +15,21 @@ namespace TutorCabinet.Api.Controllers;
 [Route("api/[controller]")]
 public class UsersController(IUserService userService) : ControllerBase
 {
+    [HttpGet]
+    public async Task<ActionResult<AllUsersResponse>> GetAll()
+    {
+        var usersListDto = await userService.GetAllAsync();
+
+        if (usersListDto is null) return NotFound();
+
+        // Маппим UserDto в UserResponse
+        var users = usersListDto.Users
+            .Select(dto => new UserResponse(dto.Id, dto.Email, dto.Name))
+            .ToList();
+
+        return Ok(new AllUsersResponse(users, usersListDto.TotalCount));
+    }
+
     /// <summary>
     /// API для получения <see cref="User"/> по переданному id
     /// </summary>
@@ -25,12 +41,7 @@ public class UsersController(IUserService userService) : ControllerBase
     {
         var dto = await userService.GetByIdAsync(id, cancellationToken);
         if (dto is null) return NotFound();
-        return Ok(new UserResponse
-        {
-            Id = dto.Id,
-            Email = dto.Email,
-            Name = dto.Name
-        });
+        return Ok(new UserResponse(dto.Id, dto.Email, dto.Name));
     }
 
     /// <summary>
@@ -47,6 +58,6 @@ public class UsersController(IUserService userService) : ControllerBase
             Email = req.Email, Name = req.Name, Password = req.Password
         };
         var newId = await userService.CreateAsync(dto, cancellationToken);
-        return CreatedAtAction(nameof(Get), new { id = newId }, null);
+        return CreatedAtAction(nameof(Get), new { id = newId }, new UserIdResponse(newId));
     }
 }

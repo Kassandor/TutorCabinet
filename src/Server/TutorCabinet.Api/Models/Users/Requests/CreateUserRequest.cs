@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using TutorCabinet.Core.Entities;
 
-namespace TutorCabinet.Api.Models;
+namespace TutorCabinet.Api.Models.Users.Requests;
 
 /// <summary>
 /// API-запрос создания <see cref="User"/>

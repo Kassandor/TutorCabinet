@@ -8,6 +8,13 @@ namespace TutorCabinet.Core.Interfaces;
 public interface IUserRepository
 {
     /// <summary>
+    /// Получение списка <see cref="User"/>
+    /// </summary>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
+    Task<List<User>?> GetAllAsync(CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение <see cref="User"/> по id
     /// </summary>
     /// <param name="id"><see cref="Guid"/></param>
@@ -16,7 +23,7 @@ public interface IUserRepository
     Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Получение пользователя по email из базы данных
+    /// Получение <see cref="User"/> по email из базы данных
     /// </summary>
     /// <param name="email">Email</param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>

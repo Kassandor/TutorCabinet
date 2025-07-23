@@ -22,16 +22,18 @@ public class UserService(IUserRepository repo, IPasswordHasher hasher) : IUserSe
         return user.Id;
     }
 
+    public async Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        var users = await repo.GetAllAsync(cancellationToken);
+        if (users is null) return null;
+        var usersDto = users.Select(u => new UserDto(u.Id, u.Email.Address, u.Name)).ToList();
+        return new UsersListDto(usersDto, usersDto.Count);
+    }
+    
     public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var user = await repo.GetByIdAsync(id, cancellationToken);
-        if (user is null) return null;
-        return new UserDto
-        {
-            Id = user.Id,
-            Email = user.Email.Address,
-            Name = user.Name,
-        };
+        return user is null ? null : new UserDto(user.Id, user.Email.Address, user.Name);
     }
 
     public async Task<bool> CheckCredentialsAsync(string email, string password, CancellationToken cancellationToken)

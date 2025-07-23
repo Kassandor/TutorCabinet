@@ -13,6 +13,13 @@ namespace TutorCabinet.Infrastructure.Repositories;
 /// <param name="db">Контекст базы данных <see cref="PgDbContext"/></param>
 public class UserRepository(PgDbContext db) : IUserRepository
 {
+    public async Task<List<User>?> GetAllAsync(CancellationToken cancellationToken)
+    {
+        var userEntities = await db.Users.ToListAsync(cancellationToken);
+        var users = userEntities.Select(e => new User(e.Id, new Email(e.Email), e.Name));
+        return users.ToList();
+    }
+    
     public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await db.Users.FindAsync([id], cancellationToken);
@@ -41,7 +48,8 @@ public class UserRepository(PgDbContext db) : IUserRepository
             Id = user.Id,
             Email = user.Email.Address,
             Name = user.Name,
-            CreatedAt = user.CreatedAt
+            CreatedAt = user.CreatedAt,
+            PasswordHash = user.PasswordHash
         };
         await db.Users.AddAsync(entity, cancellationToken);
         await db.SaveChangesAsync(cancellationToken);

@@ -9,7 +9,7 @@ namespace TutorCabinet.Application.Interfaces;
 public interface IUserService
 {
     /// <summary>
-    /// Создание пользователя
+    /// Создание <see cref="User"/>
     /// </summary>
     /// <param name="dto"><see cref="CreateUserDto"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -17,7 +17,14 @@ public interface IUserService
     Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Получение пользователя по id
+    /// Получение всех <see cref="User"/>
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Получение <see cref="User"/> по id
     /// </summary>
     /// <param name="id"><see cref="Guid"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -25,7 +32,7 @@ public interface IUserService
     Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Проверка данных для авторизации
+    /// Проверка данных <see cref="User"/> для авторизации
     /// </summary>
     /// <param name="email">Email</param>
     /// <param name="password">Пароль</param>
@@ -34,7 +41,7 @@ public interface IUserService
     Task<bool> CheckCredentialsAsync(string email, string password, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Обновление данных пользователя
+    /// Обновление данных <see cref="User"/>
     /// </summary>
     /// <param name="dto"><see cref="UpdateUserDto"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
@@ -42,7 +49,7 @@ public interface IUserService
     Task UpdateAsync(UpdateUserDto dto, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Удаление пользователя
+    /// Удаление <see cref="User"/>
     /// </summary>
     /// <param name="id"><see cref="Guid"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
