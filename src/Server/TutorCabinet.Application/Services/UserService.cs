@@ -11,7 +11,7 @@ namespace TutorCabinet.Application.Services;
 /// </summary>
 /// <param name="repo"><see cref="IUserRepository"/></param>
 /// <param name="hasher"><see cref="IPasswordHasher"/></param>
-public class UserService(IUserRepository repo, ICommitterService committer, IPasswordHasher hasher) : IUserService
+public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher hasher) : IUserService
 {
     public async Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken)
     {
@@ -19,8 +19,18 @@ public class UserService(IUserRepository repo, ICommitterService committer, IPas
         var hash = hasher.Hash(dto.Password);
         user.SetPassword(hash);
 
-        await repo.AddAsync(user, cancellationToken);
-        await committer.SaveChangesAsync(cancellationToken);
+        await uow.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            await repo.AddAsync(user, cancellationToken);
+            await uow.SaveChangesAsync(cancellationToken);
+            await uow.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await uow.RollbackAsync(cancellationToken);
+        }
+
         return user.Id;
     }
 

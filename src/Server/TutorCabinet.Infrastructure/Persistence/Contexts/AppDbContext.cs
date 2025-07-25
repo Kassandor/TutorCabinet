@@ -2,7 +2,7 @@
 using TutorCabinet.Infrastructure.Data.Configurations;
 using TutorCabinet.Infrastructure.Data.Models;
 
-namespace TutorCabinet.Infrastructure.Data.Contexts;
+namespace TutorCabinet.Infrastructure.Persistence.Contexts;
 
 /// <summary>
 /// Абстрактный контекст для базы данных

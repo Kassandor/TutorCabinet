@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Application.Services;
 using TutorCabinet.Core.Interfaces;
-using TutorCabinet.Infrastructure.Data;
-using TutorCabinet.Infrastructure.Data.Contexts;
-using TutorCabinet.Infrastructure.Data.Repositories;
 using TutorCabinet.Infrastructure.ExternalServices;
+using TutorCabinet.Infrastructure.Persistence.Contexts;
+using TutorCabinet.Infrastructure.Persistence.Repositories;
+using TutorCabinet.Infrastructure.Persistence.UnitOfWork;
 
 namespace TutorCabinet.Api;
 
@@ -27,7 +27,7 @@ public static class Program
 
         // Internal Services
         builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<ICommitterService, CommitterService>();
+        builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
         // Repositories
         builder.Services.AddScoped<IUserRepository, UserRepository>();

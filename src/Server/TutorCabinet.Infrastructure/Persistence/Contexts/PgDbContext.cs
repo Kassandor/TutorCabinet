@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace TutorCabinet.Infrastructure.Data.Contexts;
+namespace TutorCabinet.Infrastructure.Persistence.Contexts;
 
 /// <summary>
 /// Контекст базы данных PostgreSQL
