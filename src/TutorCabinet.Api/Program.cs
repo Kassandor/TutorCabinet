@@ -13,10 +13,11 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        // DI container, configuration, environment
+        // Main settings
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
         var environment = builder.Environment;
+        var allowedHosts = configuration.GetSection("AllowedHosts").Get<string[]>() ?? [];
 
         builder.Services.AddAuthorization();
         builder.Services.AddControllers();
@@ -25,6 +26,11 @@ public static class Program
             options.UseNpgsql(configuration.GetConnectionString("PgDatabase"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
+
+        // CORS policy
+        builder.Services.AddCors(options =>
+            options.AddPolicy("AllowedHosts",
+                policy => policy.WithOrigins(allowedHosts).AllowAnyMethod().AllowAnyHeader()));
 
         // Internal Services
         builder.Services.AddScoped<IUserService, UserService>();
@@ -46,6 +52,7 @@ public static class Program
         }
 
         var app = builder.Build();
+        app.UseCors("AllowedHosts");
         app.MapControllers();
         app.UseHttpsRedirection();
         app.UseAuthorization();
