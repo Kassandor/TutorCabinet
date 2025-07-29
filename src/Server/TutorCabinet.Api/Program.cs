@@ -17,12 +17,13 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
         var environment = builder.Environment;
-        
+
         builder.Services.AddAuthorization();
         builder.Services.AddControllers();
-        builder.Services.AddDbContext<AppDbContext, PgDbContext>(options =>
+        builder.Services.AddDbContextPool<AppDbContext, PgDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("PgDatabase"));
+            options.UseNpgsql(configuration.GetConnectionString("PgDatabase"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
 
         // Internal Services
