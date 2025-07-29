@@ -1,15 +1,13 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet", "src\Server\TutorCabinet.Api\TutorCabinet.Api.csproj", "{CE068288-56E4-4BAC-A2C6-18E829E2B572}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet", "src\TutorCabinet.Api\TutorCabinet.Api.csproj", "{CE068288-56E4-4BAC-A2C6-18E829E2B572}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{9C5C9AD4-B977-4EC6-B710-96A0B1C4444C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7474953-F093-46DF-A470-851939E0411F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests\Server", "{D7474953-F093-46DF-A470-851939E0411F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Infrastructure", "src\TutorCabinet.Infrastructure\TutorCabinet.Infrastructure.csproj", "{9F2E9A6A-6300-4A0F-8285-BDE34AF58358}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Infrastructure", "src\Server\TutorCabinet.Infrastructure\TutorCabinet.Infrastructure.csproj", "{9F2E9A6A-6300-4A0F-8285-BDE34AF58358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Core", "src\TutorCabinet.Core\TutorCabinet.Core.csproj", "{5995A069-DC26-4AA7-9E94-9EEE25C7B9A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Core", "src\Server\TutorCabinet.Core\TutorCabinet.Core.csproj", "{5995A069-DC26-4AA7-9E94-9EEE25C7B9A3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Application", "src\Server\TutorCabinet.Application\TutorCabinet.Application.csproj", "{1BD54436-6582-426B-BD6B-90911A3F436C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorCabinet.Application", "src\TutorCabinet.Application\TutorCabinet.Application.csproj", "{1BD54436-6582-426B-BD6B-90911A3F436C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,9 +33,5 @@ Global
 		{1BD54436-6582-426B-BD6B-90911A3F436C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CE068288-56E4-4BAC-A2C6-18E829E2B572} = {9C5C9AD4-B977-4EC6-B710-96A0B1C4444C}
-		{9F2E9A6A-6300-4A0F-8285-BDE34AF58358} = {9C5C9AD4-B977-4EC6-B710-96A0B1C4444C}
-		{5995A069-DC26-4AA7-9E94-9EEE25C7B9A3} = {9C5C9AD4-B977-4EC6-B710-96A0B1C4444C}
-		{1BD54436-6582-426B-BD6B-90911A3F436C} = {9C5C9AD4-B977-4EC6-B710-96A0B1C4444C}
 	EndGlobalSection
 EndGlobal
