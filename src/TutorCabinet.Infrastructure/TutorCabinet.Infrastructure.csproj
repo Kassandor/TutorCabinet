@@ -10,9 +10,11 @@
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TutorCabinet.Application\TutorCabinet.Application.csproj" />
       <ProjectReference Include="..\TutorCabinet.Core\TutorCabinet.Core.csproj" />
     </ItemGroup>
 

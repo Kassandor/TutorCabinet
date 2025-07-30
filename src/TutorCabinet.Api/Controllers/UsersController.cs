@@ -53,12 +53,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] CreateUserRequest req, CancellationToken cancellationToken)
     {
-        var dto = new CreateUserDto
-        {
-            Email = req.Email,
-            Name = req.Name,
-            Password = req.Password
-        };
+        var dto = new CreateUserDto(req.Email, req.Name, req.Password);
         var newId = await userService.CreateAsync(dto, cancellationToken);
         return CreatedAtAction(nameof(Get), new { id = newId }, new UserIdResponse(newId));
     }

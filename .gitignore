@@ -53,3 +53,4 @@ nunit-*.xml
 ########################
 .idea/
 *.DotSettings.user
+src/TutorCabinet.Api/localConfig.json
