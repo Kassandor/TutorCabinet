@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TutorCabinet.Api.Models.Users.Requests;
+namespace TutorCabinet.Api.Models.Auth.Requests;
 
+/// <summary>
+/// Запрос на аутентификацию пользователя
+/// </summary>
 public class AuthUserRequest
 {
     [Required, EmailAddress] public required string Email { get; init; }

@@ -4,13 +4,19 @@ using TutorCabinet.Core.Interfaces;
 
 namespace TutorCabinet.Application.Services;
 
-public class AuthService(IUserRepository userRepo, IJwtProvider jwtProvider, IUnitOfWork uow, IPasswordHasher hasher)
+public class AuthService(IUserRepository userRepo, IJwtProvider jwtProvider, IPasswordHasher hasher)
     : IAuthService
 {
-    public async Task<string?> LoginAsync(AuthUserDto userDto, CancellationToken cancellationToken)
+    public async Task<TokenPair?> LoginAsync(AuthUserDto userDto, CancellationToken cancellationToken)
     {
         var user = await userRepo.GetByEmailAsync(userDto.Email, cancellationToken);
         if (user is null || !user.VerifyPassword(userDto.Password, hasher)) return null;
-        return jwtProvider.GenerateToken(user);
+        return jwtProvider.GenerateTokens(user);
+    }
+
+    public async Task<TokenPair?> RefreshTokenAsync(RefreshTokenDto dto, CancellationToken cancellationToken)
+    {
+        var user = await userRepo.GetByEmailAsync(dto.Email, cancellationToken);
+        return user is null ? null : jwtProvider.GenerateTokens(user);
     }
 }
