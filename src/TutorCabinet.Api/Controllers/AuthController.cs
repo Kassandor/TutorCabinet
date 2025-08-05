@@ -36,7 +36,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     public async Task<ActionResult<AuthUserResponse>> Refresh([FromBody] RefreshTokensRequest req,
         CancellationToken cancellationToken)
     {
-        var dto = new RefreshTokenDto(req.Email, req.RefreshToken);
+        var dto = new RefreshTokenDto(req.RefreshToken);
         var newTokens = await authService.RefreshTokenAsync(dto, cancellationToken);
         if (newTokens is null) return Unauthorized();
         return Ok(new AuthUserResponse(newTokens));

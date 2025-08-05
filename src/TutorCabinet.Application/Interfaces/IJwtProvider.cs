@@ -14,4 +14,6 @@ public interface IJwtProvider
     /// <param name="user"><see cref="User"/></param>
     /// <returns></returns>
     TokenPair GenerateTokens(User user);
+
+    string? GetEmailFromToken(string token);
 }

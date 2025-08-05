@@ -16,7 +16,9 @@ public class AuthService(IUserRepository userRepo, IJwtProvider jwtProvider, IPa
 
     public async Task<TokenPair?> RefreshTokenAsync(RefreshTokenDto dto, CancellationToken cancellationToken)
     {
-        var user = await userRepo.GetByEmailAsync(dto.Email, cancellationToken);
+        var email = jwtProvider.GetEmailFromToken(dto.RefreshToken);
+        if (email is null) return null;
+        var user = await userRepo.GetByEmailAsync(email, cancellationToken);
         return user is null ? null : jwtProvider.GenerateTokens(user);
     }
 }

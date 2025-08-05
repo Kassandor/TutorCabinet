@@ -19,8 +19,15 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
     public TokenPair GenerateTokens(User user)
     {
         var optionsValue = options.Value;
-        Claim[] accessClaims = [new("userId", user.Id.ToString()), new("type", "access")];
-        Claim[] refreshClaims = [new("userId", user.Id.ToString()), new("type", "refresh")];
+
+        var commonClaims = new[]
+        {
+            new Claim("userId", user.Id.ToString()),
+            new Claim("email", user.Email.Address)
+        };
+
+        var accessClaims = commonClaims.Concat([new Claim("type", "access")]).ToArray();
+        var refreshClaims = commonClaims.Concat([new Claim("type", "refresh")]).ToArray();
 
         var signingCredentials =
             new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(optionsValue.SecretKey)),
@@ -42,5 +49,14 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
             new JwtSecurityTokenHandler().WriteToken(accessToken),
             new JwtSecurityTokenHandler().WriteToken(refreshToken)
         );
+    }
+
+    public string? GetEmailFromToken(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+
+        var email = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        return email;
     }
 }

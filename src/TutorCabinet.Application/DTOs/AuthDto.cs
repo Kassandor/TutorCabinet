@@ -10,9 +10,8 @@ public sealed record AuthUserDto(string Email, string Password);
 /// <summary>
 /// DTO для обновления пары JWT токенов
 /// </summary>
-/// <param name="Email">Email</param>
 /// <param name="RefreshToken">Refresh Token</param>
-public sealed record RefreshTokenDto(string Email, string RefreshToken);
+public sealed record RefreshTokenDto(string RefreshToken);
 
 /// <summary>
 /// DTO содержащий пару Access + Resfresh токенов
