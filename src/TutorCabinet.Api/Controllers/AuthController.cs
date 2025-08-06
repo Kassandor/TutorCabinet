@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorCabinet.Api.Models.Auth.Requests;
 using TutorCabinet.Api.Models.Auth.Respones;
@@ -17,6 +18,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthUserResponse>> Login([FromBody] AuthUserRequest req,
         CancellationToken cancellationToken)
     {
@@ -33,6 +35,7 @@ public class AuthController(IAuthService authService) : ControllerBase
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
     [HttpPost("refresh")]
+    [Authorize]
     public async Task<ActionResult<AuthUserResponse>> Refresh([FromBody] RefreshTokensRequest req,
         CancellationToken cancellationToken)
     {

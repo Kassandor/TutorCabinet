@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorCabinet.Api.Models.Users.Requests;
 using TutorCabinet.Api.Models.Users.Responses;
@@ -13,6 +14,7 @@ namespace TutorCabinet.Api.Controllers;
 /// <param name="userService"><see cref="IUserService"/></param>
 [ApiController]
 [Route("api/[controller]")]
+[AllowAnonymous] //todo: Убрать, когда поедем в прод, только для тестирования в свагере
 public class UsersController(IUserService userService) : ControllerBase
 {
     [HttpGet]
