@@ -34,12 +34,16 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
                 SecurityAlgorithms.HmacSha256);
 
         var accessToken = new JwtSecurityToken(
+            issuer: optionsValue.Issuer,
+            audience: optionsValue.Audience,
             signingCredentials: signingCredentials,
             claims: accessClaims,
             expires: DateTime.UtcNow.AddHours(optionsValue.AccessExpireHours)
         );
 
         var refreshToken = new JwtSecurityToken(
+            issuer: optionsValue.Issuer,
+            audience: optionsValue.Audience,
             signingCredentials: signingCredentials,
             claims: refreshClaims,
             expires: DateTime.UtcNow.AddHours(optionsValue.RefreshExpireHours)

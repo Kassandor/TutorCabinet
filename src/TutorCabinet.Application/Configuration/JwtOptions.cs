@@ -2,9 +2,9 @@ namespace TutorCabinet.Application.Configuration;
 
 public sealed record JwtOptions
 {
-    public string SecretKey { get; init; }
-    public string Issuer { get; init; }
-    public string Audience { get; init; }
-    public int AccessExpireHours { get; init; }
-    public int RefreshExpireHours { get; init; }
+    public required string SecretKey { get; init; }
+    public required string Issuer { get; init; }
+    public required string Audience { get; init; }
+    public required int AccessExpireHours { get; init; }
+    public required int RefreshExpireHours { get; init; }
 }
