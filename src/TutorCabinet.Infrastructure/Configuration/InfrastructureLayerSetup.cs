@@ -20,15 +20,18 @@ public static class InfrastructureLayerSetup
     /// <param name="services"><see cref="IServiceCollection"/></param>
     /// <param name="configuration"><see cref="IConfiguration"/></param>
     /// <returns></returns>
-    public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services,
-        IConfiguration configuration)
+    public static void AddInfrastructureLayer(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.AddDbContextPool<AppDbContext, PgDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("PgDatabase"))
+            options
+                .UseNpgsql(configuration.GetConnectionString("PgDatabase"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
-        
+
         // Internal Services
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
@@ -41,6 +44,5 @@ public static class InfrastructureLayerSetup
         // External Services
         // Hasher паролей
         services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
-        return services;
     }
 }

@@ -29,9 +29,11 @@ public static class ApiLayerSetup
     {
         var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
 
-        if (jwtOptions is null) return;
+        if (jwtOptions is null)
+            return;
         services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -42,15 +44,19 @@ public static class ApiLayerSetup
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtOptions.Issuer,
                     ValidAudience = jwtOptions.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey))
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtOptions.SecretKey)
+                    ),
                 };
             });
         services.AddAuthorization();
-        services.AddControllers().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        });
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
     }
 
     /// <summary>
@@ -64,8 +70,11 @@ public static class ApiLayerSetup
         var allowedHosts = configuration.GetSection("AllowedHosts").Get<string[]>() ?? [];
 
         services.AddCors(options =>
-            options.AddPolicy("AllowedHosts",
-                policy => policy.WithOrigins(allowedHosts).AllowAnyMethod().AllowAnyHeader()));
+            options.AddPolicy(
+                "AllowedHosts",
+                policy => policy.WithOrigins(allowedHosts).AllowAnyMethod().AllowAnyHeader()
+            )
+        );
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TutorCabinet.Infrastructure.Data.Models;
+using TutorCabinet.Infrastructure.Persistence.Entities;
 
 namespace TutorCabinet.Infrastructure.Data.Configurations;
 

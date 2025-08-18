@@ -8,35 +8,64 @@ namespace TutorCabinet.Core.Entities;
 /// </summary>
 public class User
 {
-    public Guid Id { get; set; }
-    public Email Email { get; set; }
-    public string Name { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public string PasswordHash { get; set; }
+    public Guid Id { get; }
+    public Email Email { get; }
+    public string Name { get; }
+    public DateTime CreatedAt { get; }
+    public DateTime UpdatedAt { get; }
+    public string PasswordHash { get; }
 
-    protected User()
-    {
-    }
-
-    public User(Guid id, Email email, string name)
+    private User(
+        Guid id,
+        Email email,
+        string name,
+        string passwordHash,
+        DateTime createdAt,
+        DateTime updatedAt
+    )
     {
         Id = id;
         Email = email;
         Name = name;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        PasswordHash = passwordHash;
     }
 
     /// <summary>
-    /// Установка пароля
+    /// Фабричный метод создания нового пользователя
     /// </summary>
+    /// <param name="id"><see cref="Guid"/></param>
+    /// <param name="email">Email</param>
+    /// <param name="name">Name</param>
     /// <param name="passwordHash">Хеш пароля</param>
-    public void SetPassword(string passwordHash)
+    /// <returns></returns>
+    public static User Create(Guid id, Email email, string name, string passwordHash)
     {
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentNullException(nameof(passwordHash), "Хеш пароля не может быть пустым");
-        PasswordHash = passwordHash;
+        var now = DateTime.UtcNow;
+        return new User(id, email, name, passwordHash, now, now);
+    }
+
+    /// <summary>
+    /// Фабричный метод, возвращающий пользователя
+    /// </summary>
+    /// <param name="id"><see cref="Guid"/></param>
+    /// <param name="email">Email</param>
+    /// <param name="name">Name</param>
+    /// <param name="passwordHash">Хеш пароля</param>
+    /// <param name="createdAt">Дата создания</param>
+    /// <param name="updatedAt">Дата обновления</param>
+    /// <returns></returns>
+    public static User Get(
+        Guid id,
+        Email email,
+        string name,
+        string passwordHash,
+        DateTime createdAt,
+        DateTime updatedAt
+    )
+    {
+        return new User(id, email, name, passwordHash, createdAt, updatedAt);
     }
 
     /// <summary>
