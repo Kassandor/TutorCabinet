@@ -15,7 +15,10 @@ public sealed class Email : IEquatable<Email>
     }
 
     public override bool Equals(object? obj) => Equals(obj as Email);
+
     public bool Equals(Email? other) => other != null && Address == other.Address;
+
     public override int GetHashCode() => Address.GetHashCode();
+
     public override string ToString() => Address;
 }

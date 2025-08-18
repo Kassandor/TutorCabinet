@@ -16,4 +16,5 @@ public interface IJwtProvider
     TokenPair GenerateTokens(User user);
 
     string? GetEmailFromToken(string token);
+    Guid? GetUserIdFromToken(string token);
 }

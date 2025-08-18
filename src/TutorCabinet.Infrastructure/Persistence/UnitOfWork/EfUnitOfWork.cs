@@ -19,10 +19,10 @@ public sealed class EfUnitOfWork(AppDbContext ctx) : IUnitOfWork, IAsyncDisposab
     public async Task SaveChangesAsync(CancellationToken cancellationToken) =>
         await ctx.SaveChangesAsync(cancellationToken);
 
-
     public async Task CommitAsync(CancellationToken cancellationToken)
     {
-        if (_transaction is null) return;
+        if (_transaction is null)
+            return;
         try
         {
             await _transaction.CommitAsync(cancellationToken);
@@ -35,7 +35,8 @@ public sealed class EfUnitOfWork(AppDbContext ctx) : IUnitOfWork, IAsyncDisposab
 
     public async Task RollbackAsync(CancellationToken cancellationToken)
     {
-        if (_transaction is null) return;
+        if (_transaction is null)
+            return;
         try
         {
             await _transaction.RollbackAsync(cancellationToken);
@@ -51,7 +52,8 @@ public sealed class EfUnitOfWork(AppDbContext ctx) : IUnitOfWork, IAsyncDisposab
     /// </summary>
     private async ValueTask DisposeTransactionAsync()
     {
-        if (_transaction is null) return;
+        if (_transaction is null)
+            return;
         await _transaction.DisposeAsync();
         _transaction = null;
     }

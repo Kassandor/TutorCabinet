@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Core.Entities;
 
@@ -14,14 +15,14 @@ public interface IUserService
     /// <param name="dto"><see cref="CreateUserDto"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
-    Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken = default);
+    Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение всех <see cref="User"/>
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение <see cref="User"/> по id
@@ -29,7 +30,15 @@ public interface IUserService
     /// <param name="id"><see cref="Guid"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
-    Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получение <see cref="User"/> по JWT AccessToken
+    /// </summary>
+    /// <param name="user"><see cref="ClaimsPrincipal"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
+    Task<UserDto?> GetByCurrentUserAsync(ClaimsPrincipal user, CancellationToken cancellationToken);
 
     /// <summary>
     /// Проверка данных <see cref="User"/> для авторизации
@@ -38,7 +47,11 @@ public interface IUserService
     /// <param name="password">Пароль</param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
-    Task<bool> CheckCredentialsAsync(string email, string password, CancellationToken cancellationToken = default);
+    Task<bool> CheckCredentialsAsync(
+        string email,
+        string password,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Обновление данных <see cref="User"/>
@@ -46,7 +59,7 @@ public interface IUserService
     /// <param name="dto"><see cref="UpdateUserDto"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
-    Task UpdateAsync(UpdateUserDto dto, CancellationToken cancellationToken = default);
+    Task UpdateAsync(UpdateUserDto dto, CancellationToken cancellationToken);
 
     /// <summary>
     /// Удаление <see cref="User"/>
@@ -54,5 +67,5 @@ public interface IUserService
     /// <param name="id"><see cref="Guid"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
     /// <returns></returns>
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

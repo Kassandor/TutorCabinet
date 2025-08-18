@@ -19,12 +19,15 @@ public class AuthController(IAuthService authService) : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthUserResponse>> Login([FromBody] AuthUserRequest req,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<AuthUserResponse>> Login(
+        [FromBody] AuthUserRequest req,
+        CancellationToken cancellationToken
+    )
     {
         var dto = new AuthUserDto(req.Email, req.Password);
         var tokenPair = await authService.LoginAsync(dto, cancellationToken);
-        if (tokenPair is null) return Unauthorized();
+        if (tokenPair is null)
+            return Unauthorized();
         return Ok(new AuthUserResponse(tokenPair));
     }
 
@@ -36,12 +39,15 @@ public class AuthController(IAuthService authService) : ControllerBase
     /// <returns></returns>
     [HttpPost("refresh")]
     [Authorize]
-    public async Task<ActionResult<AuthUserResponse>> Refresh([FromBody] RefreshTokensRequest req,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<AuthUserResponse>> Refresh(
+        [FromBody] RefreshTokensRequest req,
+        CancellationToken cancellationToken
+    )
     {
         var dto = new RefreshTokenDto(req.RefreshToken);
         var newTokens = await authService.RefreshTokenAsync(dto, cancellationToken);
-        if (newTokens is null) return Unauthorized();
+        if (newTokens is null)
+            return Unauthorized();
         return Ok(new AuthUserResponse(newTokens));
     }
 }

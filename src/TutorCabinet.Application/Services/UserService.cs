@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Core.Entities;
@@ -11,8 +12,12 @@ namespace TutorCabinet.Application.Services;
 /// </summary>
 /// <param name="repo"><see cref="IUserRepository"/></param>
 /// <param name="hasher"><see cref="IPasswordHasher"/></param>
-public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher hasher)
-    : IUserService
+public class UserService(
+    IUserRepository repo,
+    IUnitOfWork uow,
+    IPasswordHasher hasher,
+    IJwtProvider jwtProvider
+) : IUserService
 {
     public async Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken)
     {
@@ -34,7 +39,7 @@ public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher 
         return user.Id;
     }
 
-    public async Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken)
     {
         var users = await repo.GetAllAsync(cancellationToken);
         if (users is null)
@@ -43,10 +48,24 @@ public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher 
         return new UsersListDto(usersDto, usersDto.Count);
     }
 
-    public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var user = await repo.GetByIdAsync(id, cancellationToken);
         return user is null ? null : new UserDto(user.Id, user.Email.Address, user.Name);
+    }
+
+    public async Task<UserDto?> GetByCurrentUserAsync(
+        ClaimsPrincipal user,
+        CancellationToken cancellationToken
+    )
+    {
+        var accessToken = user.FindFirst("accessToken")?.Value;
+        if (accessToken is null)
+            return null;
+        var guidFromToken = jwtProvider.GetUserIdFromToken(accessToken);
+        if (guidFromToken is null)
+            return null;
+        return await GetByIdAsync(guidFromToken.Value, cancellationToken);
     }
 
     public async Task<bool> CheckCredentialsAsync(
@@ -59,12 +78,12 @@ public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher 
         return user != null && user.VerifyPassword(password, hasher);
     }
 
-    public Task UpdateAsync(UpdateUserDto dto, CancellationToken cancellationToken = default)
+    public Task UpdateAsync(UpdateUserDto dto, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

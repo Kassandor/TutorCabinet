@@ -74,5 +74,6 @@ public class User
     /// <param name="password">Пароль</param>
     /// <param name="hasher">Хешер паролей</param>
     /// <returns></returns>
-    public bool VerifyPassword(string password, IPasswordHasher hasher) => hasher.Verify(password, PasswordHash);
+    public bool VerifyPassword(string password, IPasswordHasher hasher) =>
+        hasher.Verify(password, PasswordHash);
 }
