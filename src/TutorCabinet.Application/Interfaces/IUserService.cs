@@ -14,14 +14,14 @@ public interface IUserService
     /// </summary>
     /// <param name="dto"><see cref="CreateUserDto"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns></returns>
+    /// <returns><see cref="Guid"/></returns>
     Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение всех <see cref="User"/>
     /// </summary>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <returns><see cref="UsersListDto"/>?</returns>
     Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
@@ -29,15 +29,15 @@ public interface IUserService
     /// </summary>
     /// <param name="id"><see cref="Guid"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns></returns>
+    /// <returns><see cref="UserDto"/>?</returns>
     Task<UserDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Получение <see cref="User"/> по JWT AccessToken
+    /// Получение <see cref="User"/> по <see cref="ClaimsPrincipal"/>
     /// </summary>
     /// <param name="user"><see cref="ClaimsPrincipal"/></param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns></returns>
+    /// <returns><see cref="UserDto"/>?</returns>
     Task<UserDto?> GetByCurrentUserAsync(ClaimsPrincipal user, CancellationToken cancellationToken);
 
     /// <summary>
@@ -46,7 +46,7 @@ public interface IUserService
     /// <param name="email">Email</param>
     /// <param name="password">Пароль</param>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
-    /// <returns></returns>
+    /// <returns><see cref="bool"/></returns>
     Task<bool> CheckCredentialsAsync(
         string email,
         string password,

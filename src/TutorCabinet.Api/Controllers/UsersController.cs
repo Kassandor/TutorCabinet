@@ -75,11 +75,8 @@ public class UsersController(IUserService userService) : ControllerBase
     /// <returns></returns>
     [HttpGet("me")]
     [Authorize]
-    
-    // todo: Допилить
     public async Task<ActionResult<UserResponse>> GetMe(CancellationToken cancellationToken)
     {
-        Console.WriteLine($"{User.FindFirst("accessToken")?.Value}");
         var dto = await userService.GetByCurrentUserAsync(User, cancellationToken);
         if (dto is null)
             return NotFound();

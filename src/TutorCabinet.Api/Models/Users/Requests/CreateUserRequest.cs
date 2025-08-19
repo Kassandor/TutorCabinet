@@ -8,10 +8,10 @@ namespace TutorCabinet.Api.Models.Users.Requests;
 /// </summary>
 public class CreateUserRequest
 {
-    [Required, EmailAddress]
+    [Required, EmailAddress, StringLength(320, MinimumLength = 8)]
     public required string Email { get; init; }
 
-    [Required, StringLength(200, MinimumLength = 2)]
+    [Required, StringLength(100, MinimumLength = 2)]
     public required string Name { get; init; }
 
     [Required, StringLength(100, MinimumLength = 6)]

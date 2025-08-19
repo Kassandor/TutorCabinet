@@ -59,13 +59,10 @@ public class UserService(
         CancellationToken cancellationToken
     )
     {
-        var accessToken = user.FindFirst("accessToken")?.Value;
-        if (accessToken is null)
+        var guidString = user.FindFirst("userId")?.Value;
+        if (guidString is null)
             return null;
-        var guidFromToken = jwtProvider.GetUserIdFromToken(accessToken);
-        if (guidFromToken is null)
-            return null;
-        return await GetByIdAsync(guidFromToken.Value, cancellationToken);
+        return await GetByIdAsync(Guid.Parse(guidString), cancellationToken);
     }
 
     public async Task<bool> CheckCredentialsAsync(
