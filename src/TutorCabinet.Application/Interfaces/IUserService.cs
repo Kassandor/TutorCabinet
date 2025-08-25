@@ -10,6 +10,22 @@ namespace TutorCabinet.Application.Interfaces;
 public interface IUserService
 {
     /// <summary>
+    /// Проверяет существование пользователя в базе данных по переданным утверждениям
+    /// </summary>
+    /// <param name="user"><see cref="ClaimsPrincipal"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
+    Task<bool> UserExistsByClaimsAsync(ClaimsPrincipal user, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Проверяет существование пользователя в базе данных по переданному <see cref="Guid"/>
+    /// </summary>
+    /// <param name="id"><see cref="Guid"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
+    Task<bool> UserExistsAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Создание <see cref="User"/>
     /// </summary>
     /// <param name="dto"><see cref="CreateUserDto"/></param>

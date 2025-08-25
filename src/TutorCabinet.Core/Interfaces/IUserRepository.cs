@@ -8,6 +8,14 @@ namespace TutorCabinet.Core.Interfaces;
 public interface IUserRepository
 {
     /// <summary>
+    /// Проверка, существует ли пользователь в базе данных
+    /// </summary>
+    /// <param name="userId"><see cref="Guid"/></param>
+    /// <param name="cancellationToken"><see cref="CancellationToken"/></param>
+    /// <returns></returns>
+    Task<bool> ExistsAsync(Guid userId, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Получение списка <see cref="User"/>
     /// </summary>
     /// <param name="cancellationToken"><see cref="CancellationToken"/></param>

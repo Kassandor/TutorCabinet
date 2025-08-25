@@ -13,6 +13,11 @@ namespace TutorCabinet.Infrastructure.Persistence.Repositories;
 /// <param name="ctx">Контекст базы данных <see cref="PgDbContext"/></param>
 public class UserRepository(AppDbContext ctx) : IUserRepository
 {
+    public async Task<bool> ExistsAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await ctx.Users.AnyAsync(x => x.Id == userId, cancellationToken);
+    }
+
     public async Task<List<User>?> GetAllAsync(CancellationToken cancellationToken)
     {
         var userEntities = await ctx.Users.ToListAsync(cancellationToken);

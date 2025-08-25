@@ -12,12 +12,8 @@ namespace TutorCabinet.Application.Services;
 /// </summary>
 /// <param name="repo"><see cref="IUserRepository"/></param>
 /// <param name="hasher"><see cref="IPasswordHasher"/></param>
-public class UserService(
-    IUserRepository repo,
-    IUnitOfWork uow,
-    IPasswordHasher hasher,
-    IJwtProvider jwtProvider
-) : IUserService
+public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher hasher)
+    : IUserService
 {
     public async Task<Guid> CreateAsync(CreateUserDto dto, CancellationToken cancellationToken)
     {
@@ -63,6 +59,22 @@ public class UserService(
         if (guidString is null)
             return null;
         return await GetByIdAsync(Guid.Parse(guidString), cancellationToken);
+    }
+
+    public async Task<bool> UserExistsByClaimsAsync(
+        ClaimsPrincipal user,
+        CancellationToken cancellationToken
+    )
+    {
+        var guidString = user.FindFirst("userId")?.Value;
+        if (guidString is null)
+            return false;
+        return await UserExistsAsync(Guid.Parse(guidString), cancellationToken);
+    }
+
+    public async Task<bool> UserExistsAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await repo.ExistsAsync(id, cancellationToken);
     }
 
     public async Task<bool> CheckCredentialsAsync(

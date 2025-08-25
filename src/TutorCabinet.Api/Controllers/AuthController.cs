@@ -8,8 +8,8 @@ using TutorCabinet.Application.Interfaces;
 namespace TutorCabinet.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class AuthController(IAuthService authService) : ControllerBase
+[Route("api/auth")]
+public class AuthController(IAuthService authService, IUserService userService) : ControllerBase
 {
     /// <summary>
     /// Контроллер формы входа пользователя
@@ -45,8 +45,10 @@ public class AuthController(IAuthService authService) : ControllerBase
     )
     {
         var dto = new RefreshTokenDto(req.RefreshToken);
-        var newTokens = await authService.RefreshTokenAsync(dto, cancellationToken);
-        if (newTokens is null)
+        if (
+            !await userService.UserExistsByClaimsAsync(User, cancellationToken)
+            || await authService.RefreshTokenAsync(dto, cancellationToken) is not { } newTokens
+        )
             return Unauthorized();
         return Ok(new AuthUserResponse(newTokens));
     }

@@ -13,7 +13,7 @@ namespace TutorCabinet.Api.Controllers;
 /// </summary>
 /// <param name="userService"><see cref="IUserService"/></param>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/users")]
 public class UsersController(IUserService userService) : ControllerBase
 {
     /// <summary>
@@ -40,9 +40,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<AllUsersResponse>> GetAll(CancellationToken cancellationToken)
     {
-        var usersListDto = await userService.GetAllAsync(cancellationToken);
-
-        if (usersListDto is null)
+        if (await userService.GetAllAsync(cancellationToken) is not {} usersListDto)
             return NotFound();
 
         // Маппим UserDto в UserResponse
@@ -62,8 +60,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<UserResponse>> Get(Guid id, CancellationToken cancellationToken)
     {
-        var dto = await userService.GetByIdAsync(id, cancellationToken);
-        if (dto is null)
+        if (await userService.GetByIdAsync(id, cancellationToken) is not { } dto)
             return NotFound();
         return Ok(new UserResponse(dto.Id, dto.Email, dto.Name));
     }
@@ -77,9 +74,8 @@ public class UsersController(IUserService userService) : ControllerBase
     [Authorize]
     public async Task<ActionResult<UserResponse>> GetMe(CancellationToken cancellationToken)
     {
-        var dto = await userService.GetByCurrentUserAsync(User, cancellationToken);
-        if (dto is null)
-            return NotFound();
+        if (await userService.GetByCurrentUserAsync(User, cancellationToken) is not {} dto)
+            return Unauthorized();
         return Ok(new UserResponse(dto.Id, dto.Email, dto.Name));
     }
 }
