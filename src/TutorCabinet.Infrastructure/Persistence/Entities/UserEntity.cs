@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using TutorCabinet.Core.Entities;
 
 namespace TutorCabinet.Infrastructure.Persistence.Entities;
@@ -10,14 +9,12 @@ public class UserEntity
 {
     public Guid Id { get; init; }
 
-    [MaxLength(320)]
-    public string Email { get; set; } = null!;
+    public string Email { get; init; } = null!;
 
-    [MaxLength(100)]
-    public string Name { get; set; } = null!;
+    public string Name { get; init; } = null!;
 
     public DateTime CreatedAt { get; init; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; init; }
 
-    public string PasswordHash { get; set; } = null!;
+    public string PasswordHash { get; init; } = null!;
 }

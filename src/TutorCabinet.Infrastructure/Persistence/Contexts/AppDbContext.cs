@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TutorCabinet.Infrastructure.Data.Configurations;
+using TutorCabinet.Infrastructure.Persistence.Configurations;
 using TutorCabinet.Infrastructure.Persistence.Entities;
 
 namespace TutorCabinet.Infrastructure.Persistence.Contexts;

@@ -40,7 +40,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<AllUsersResponse>> GetAll(CancellationToken cancellationToken)
     {
-        if (await userService.GetAllAsync(cancellationToken) is not {} usersListDto)
+        if (await userService.GetAllAsync(cancellationToken) is not { } usersListDto)
             return NotFound();
 
         // Маппим UserDto в UserResponse
@@ -74,7 +74,7 @@ public class UsersController(IUserService userService) : ControllerBase
     [Authorize]
     public async Task<ActionResult<UserResponse>> GetMe(CancellationToken cancellationToken)
     {
-        if (await userService.GetByCurrentUserAsync(User, cancellationToken) is not {} dto)
+        if (await userService.GetByCurrentUserAsync(User, cancellationToken) is not { } dto)
             return Unauthorized();
         return Ok(new UserResponse(dto.Id, dto.Email, dto.Name));
     }
