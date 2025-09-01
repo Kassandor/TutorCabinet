@@ -1,9 +1,11 @@
+using TutorCabinet.Core.Interfaces.Entities;
+
 namespace TutorCabinet.Core.Entities;
 
 /// <summary>
 /// Доменная сущность Студент
 /// </summary>
-public class Student
+public class Student : IDomain
 {
     public Guid Id { get; }
     public string Name { get; }

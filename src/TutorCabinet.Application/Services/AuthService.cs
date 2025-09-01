@@ -1,6 +1,7 @@
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Core.Interfaces.Persistence.Repositories;
 
 namespace TutorCabinet.Application.Services;
 

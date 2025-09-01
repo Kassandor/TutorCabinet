@@ -1,20 +1,17 @@
 using TutorCabinet.Core.Entities;
+using TutorCabinet.Core.Interfaces.Persistence;
 
 namespace TutorCabinet.Infrastructure.Persistence.Entities;
 
 /// <summary>
 /// Представление <see cref="User"/> в базе данных
 /// </summary>
-public class UserEntity
+public class UserEntity : IEntity
 {
     public Guid Id { get; init; }
-
-    public string Email { get; init; } = null!;
-
-    public string Name { get; init; } = null!;
-
+    public string Email { get; set; } = null!;
+    public string Name { get; set; } = null!;
     public DateTime CreatedAt { get; init; }
-    public DateTime UpdatedAt { get; init; }
-
-    public string PasswordHash { get; init; } = null!;
+    public DateTime UpdatedAt { get; set; }
+    public string PasswordHash { get; set; } = null!;
 }

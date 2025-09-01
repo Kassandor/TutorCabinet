@@ -3,6 +3,7 @@ using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Core.Entities;
 using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Core.Interfaces.Persistence.Repositories;
 using TutorCabinet.Core.ValueObjects;
 
 namespace TutorCabinet.Application.Services;

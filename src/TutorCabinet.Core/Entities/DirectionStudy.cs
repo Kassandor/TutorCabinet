@@ -1,9 +1,11 @@
+using TutorCabinet.Core.Interfaces.Entities;
+
 namespace TutorCabinet.Core.Entities;
 
 /// <summary>
 /// Доменная сущность Направление подготовки
 /// </summary>
-public class DirectionStudy
+public class DirectionStudy : IDomain
 {
     public Guid Id { get; }
     public string Name { get; }

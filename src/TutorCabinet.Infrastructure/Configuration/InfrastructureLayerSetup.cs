@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TutorCabinet.Application.Interfaces;
 using TutorCabinet.Application.Services;
 using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Core.Interfaces.Persistence.Repositories;
 using TutorCabinet.Infrastructure.ExternalServices;
 using TutorCabinet.Infrastructure.Persistence.Contexts;
 using TutorCabinet.Infrastructure.Persistence.Repositories;
@@ -40,6 +41,8 @@ public static class InfrastructureLayerSetup
 
         // Repositories
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IDirectionStudyRepository, DirectionStudyRepository>();
 
         // External Services
         // Hasher паролей

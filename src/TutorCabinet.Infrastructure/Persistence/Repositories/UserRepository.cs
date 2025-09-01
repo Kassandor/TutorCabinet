@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TutorCabinet.Core.Entities;
-using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Core.Interfaces.Persistence.Repositories;
 using TutorCabinet.Core.ValueObjects;
 using TutorCabinet.Infrastructure.Persistence.Contexts;
 using TutorCabinet.Infrastructure.Persistence.Entities;
@@ -8,47 +8,27 @@ using TutorCabinet.Infrastructure.Persistence.Entities;
 namespace TutorCabinet.Infrastructure.Persistence.Repositories;
 
 /// <summary>
-/// <inheritdoc cref="IUserRepository"/>
+/// <inheritdoc cref="BaseRepository{TEntity,TDomain}"/>
 /// </summary>
-/// <param name="ctx">Контекст базы данных <see cref="PgDbContext"/></param>
-public class UserRepository(AppDbContext ctx) : IUserRepository
+public class UserRepository(AppDbContext ctx)
+    : BaseRepository<UserEntity, User>(ctx),
+        IUserRepository
 {
-    public async Task<bool> ExistsAsync(Guid userId, CancellationToken cancellationToken)
+    protected override User ToDomain(UserEntity entity)
     {
-        return await ctx.Users.AnyAsync(x => x.Id == userId, cancellationToken);
-    }
-
-    public async Task<List<User>?> GetAllAsync(CancellationToken cancellationToken)
-    {
-        var userEntities = await ctx.Users.ToListAsync(cancellationToken);
-        var users = userEntities.Select(e =>
-            User.Get(e.Id, new Email(e.Email), e.Name, e.PasswordHash, e.CreatedAt, e.UpdatedAt)
+        return User.Get(
+            entity.Id,
+            new Email(entity.Email),
+            entity.Name,
+            entity.PasswordHash,
+            entity.CreatedAt,
+            entity.UpdatedAt
         );
-        return users.ToList();
     }
 
-    public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    protected override UserEntity ToEntity(User user)
     {
-        var e = await ctx.Users.FindAsync([id], cancellationToken);
-        return e == null
-            ? null
-            : User.Get(e.Id, new Email(e.Email), e.Name, e.PasswordHash, e.CreatedAt, e.UpdatedAt);
-    }
-
-    public async Task<User?> GetByEmailAsync(
-        string email,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var e = await ctx.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
-        return e == null
-            ? null
-            : User.Get(e.Id, new Email(e.Email), e.Name, e.PasswordHash, e.CreatedAt, e.UpdatedAt);
-    }
-
-    public async Task AddAsync(User user, CancellationToken cancellationToken)
-    {
-        var entity = new UserEntity
+        return new UserEntity()
         {
             Id = user.Id,
             Email = user.Email.Address,
@@ -56,24 +36,25 @@ public class UserRepository(AppDbContext ctx) : IUserRepository
             CreatedAt = user.CreatedAt,
             PasswordHash = user.PasswordHash,
         };
-        await ctx.Users.AddAsync(entity, cancellationToken);
+    }
+
+    public async Task<User?> GetByEmailAsync(
+        string email,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var entity = await Ctx.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        return entity == null ? null : ToDomain(entity);
     }
 
     public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
-        var entity = await ctx.Users.FindAsync([user.Id], cancellationToken);
+        var entity = await Ctx.Users.FindAsync([user.Id], cancellationToken);
         if (entity == null)
             throw new KeyNotFoundException($"User with Id = {user.Id} not found");
         entity.Email = user.Email.Address;
         entity.Name = user.Name;
         entity.PasswordHash = user.PasswordHash;
         entity.UpdatedAt = user.UpdatedAt;
-    }
-
-    public async Task DeleteAsync(User user, CancellationToken cancellationToken = default)
-    {
-        var entity = await ctx.Users.FindAsync([user.Id], cancellationToken);
-        if (entity != null)
-            ctx.Users.Remove(entity);
     }
 }

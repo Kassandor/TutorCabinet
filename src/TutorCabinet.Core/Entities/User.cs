@@ -1,4 +1,5 @@
 using TutorCabinet.Core.Interfaces;
+using TutorCabinet.Core.Interfaces.Entities;
 using TutorCabinet.Core.ValueObjects;
 
 namespace TutorCabinet.Core.Entities;
@@ -6,7 +7,7 @@ namespace TutorCabinet.Core.Entities;
 /// <summary>
 /// Доменная сущность Пользователь
 /// </summary>
-public class User
+public class User : IDomain
 {
     public Guid Id { get; }
     public Email Email { get; }
