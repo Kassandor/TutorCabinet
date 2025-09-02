@@ -1,6 +1,6 @@
 using TutorCabinet.Core.Entities;
 
-namespace TutorCabinet.Application.DTOs;
+namespace TutorCabinet.Application.DTOs.Users;
 
 /// <summary>
 /// DTO, содержащий данные для создания нового <see cref="User"/>

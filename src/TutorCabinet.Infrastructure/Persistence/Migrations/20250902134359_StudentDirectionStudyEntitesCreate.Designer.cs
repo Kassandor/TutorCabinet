@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TutorCabinet.Infrastructure.Persistence.Contexts;
@@ -11,9 +12,11 @@ using TutorCabinet.Infrastructure.Persistence.Contexts;
 namespace TutorCabinet.Infrastructure.Migrations
 {
     [DbContext(typeof(PgDbContext))]
-    partial class PgDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250902134359_StudentDirectionStudyEntitesCreate")]
+    partial class StudentDirectionStudyEntitesCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +44,7 @@ namespace TutorCabinet.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("direction_studies", (string)null);
+                    b.ToTable("DirectionStudies");
                 });
 
             modelBuilder.Entity("TutorCabinet.Infrastructure.Persistence.Entities.StudentEntity", b =>

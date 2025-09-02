@@ -1,8 +1,9 @@
 using System.Security.Claims;
 using TutorCabinet.Application.DTOs;
+using TutorCabinet.Application.DTOs.Users;
 using TutorCabinet.Core.Entities;
 
-namespace TutorCabinet.Application.Interfaces;
+namespace TutorCabinet.Application.Interfaces.Services;
 
 /// <summary>
 /// Сервис доменной сущности <see cref="User"/>

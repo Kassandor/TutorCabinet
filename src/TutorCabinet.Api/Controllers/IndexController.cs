@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Application.Interfaces.Services;
 
 namespace TutorCabinet.Api.Controllers;
 

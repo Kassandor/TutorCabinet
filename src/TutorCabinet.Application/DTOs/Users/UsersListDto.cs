@@ -1,4 +1,4 @@
-namespace TutorCabinet.Application.DTOs;
+namespace TutorCabinet.Application.DTOs.Users;
 
 /// <summary>
 /// DTO списка пользователей
@@ -6,8 +6,3 @@ namespace TutorCabinet.Application.DTOs;
 /// <param name="Users">Коллекция <see cref="UserDto"/></param>
 /// <param name="TotalCount">Количество пользователей</param>
 public sealed record UsersListDto(List<UserDto> Users, int TotalCount);
-
-/// <summary>
-/// DTO пользователя
-/// </summary>
-public sealed record UserDto(Guid Id, string Email, string Name);

@@ -8,6 +8,7 @@ public class DirectionStudyEntityConfig : IEntityTypeConfiguration<DirectionStud
 {
     public void Configure(EntityTypeBuilder<DirectionStudyEntity> builder)
     {
+        builder.ToTable("direction_studies");
         builder.HasKey(ds => ds.Id);
         builder.Property(ds => ds.Name).IsRequired().HasMaxLength(256);
     }

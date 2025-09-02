@@ -1,6 +1,8 @@
+using System.Data.Common;
 using System.Security.Claims;
 using TutorCabinet.Application.DTOs;
-using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Application.DTOs.Users;
+using TutorCabinet.Application.Interfaces.Services;
 using TutorCabinet.Core.Entities;
 using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Core.Interfaces.Persistence.Repositories;
@@ -21,19 +23,16 @@ public class UserService(IUserRepository repo, IUnitOfWork uow, IPasswordHasher 
         var passwordHash = hasher.Hash(dto.Password);
         var user = User.Create(Guid.NewGuid(), new Email(dto.Email), dto.Name, passwordHash);
 
-        await uow.BeginTransactionAsync(cancellationToken);
         try
         {
             await repo.AddAsync(user, cancellationToken);
             await uow.SaveChangesAsync(cancellationToken);
-            await uow.CommitAsync(cancellationToken);
+            return user.Id;
         }
-        catch
+        catch (DbException ex)
         {
-            await uow.RollbackAsync(cancellationToken);
+            throw new InvalidOperationException("Unable to create user", ex);
         }
-
-        return user.Id;
     }
 
     public async Task<UsersListDto?> GetAllAsync(CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
 using TutorCabinet.Api.Configuration;
+using TutorCabinet.Application.Configuration;
 using TutorCabinet.Infrastructure.Configuration;
 
 namespace TutorCabinet.Api;
@@ -17,6 +18,7 @@ public static class Program
         configuration.AddLocalConfiguration(localConfigPath);
 
         builder.Services.AddApiLayer(configuration);
+        builder.Services.AddApplicationLayer();
         builder.Services.AddInfrastructureLayer(configuration);
         builder.Services.AddApiCors(configuration);
 

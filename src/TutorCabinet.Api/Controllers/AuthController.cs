@@ -4,6 +4,7 @@ using TutorCabinet.Api.Models.Auth.Requests;
 using TutorCabinet.Api.Models.Auth.Respones;
 using TutorCabinet.Application.DTOs;
 using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Application.Interfaces.Services;
 
 namespace TutorCabinet.Api.Controllers;
 

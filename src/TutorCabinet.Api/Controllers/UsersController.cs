@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TutorCabinet.Api.Models.Common;
 using TutorCabinet.Api.Models.Users.Requests;
 using TutorCabinet.Api.Models.Users.Responses;
-using TutorCabinet.Application.DTOs;
-using TutorCabinet.Application.Interfaces;
+using TutorCabinet.Application.DTOs.Users;
+using TutorCabinet.Application.Interfaces.Services;
 using TutorCabinet.Core.Entities;
 
 namespace TutorCabinet.Api.Controllers;
@@ -30,7 +31,7 @@ public class UsersController(IUserService userService) : ControllerBase
     {
         var dto = new CreateUserDto(req.Email, req.Name, req.Password);
         var newId = await userService.CreateAsync(dto, cancellationToken);
-        return CreatedAtAction(nameof(Get), new { id = newId }, new UserIdResponse(newId));
+        return CreatedAtAction(nameof(Get), new { id = newId }, new IdResponse(newId));
     }
 
     /// <summary>

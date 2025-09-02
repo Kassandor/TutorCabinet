@@ -20,7 +20,7 @@ public class DirectionStudy : IDomain
         UpdatedAt = updatedAt;
     }
 
-    public static DirectionStudy Create(Guid id, string name, ICollection<Student>? students = null)
+    public static DirectionStudy Create(Guid id, string name)
     {
         var now = DateTime.UtcNow;
         return new DirectionStudy(id, name, now, now);

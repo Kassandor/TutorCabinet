@@ -34,7 +34,6 @@ public static class InfrastructureLayerSetup
         });
 
         // Internal Services
-        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
