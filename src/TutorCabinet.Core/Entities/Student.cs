@@ -10,9 +10,9 @@ public class Student : IDomain
     public Guid Id { get; }
     public string Name { get; }
     public int ClassNumber { get; }
+    public Guid DirectionStudyId { get; }
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; }
-    public DirectionStudy? DirectionStudy { get; }
 
     private Student(
         Guid id,
@@ -20,12 +20,12 @@ public class Student : IDomain
         int classNumber,
         DateTime createdAt,
         DateTime updatedAt,
-        DirectionStudy? directionStudy
+        Guid directionStudyId
     )
     {
         Id = id;
         Name = name;
-        DirectionStudy = directionStudy;
+        DirectionStudyId = directionStudyId;
         ClassNumber = classNumber;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
@@ -35,11 +35,11 @@ public class Student : IDomain
         Guid id,
         string name,
         int classNumber,
-        DirectionStudy directionStudy
+        Guid directionStudyId
     )
     {
         var now = DateTime.UtcNow;
-        return new Student(id, name, classNumber, now, now, directionStudy);
+        return new Student(id, name, classNumber, now, now, directionStudyId);
     }
 
     public static Student Get(
@@ -48,9 +48,9 @@ public class Student : IDomain
         int classNumber,
         DateTime createdAt,
         DateTime updatedAt,
-        DirectionStudy? directionStudy = null
+        Guid directionStudyId
     )
     {
-        return new Student(id, name, classNumber, createdAt, updatedAt, directionStudy);
+        return new Student(id, name, classNumber, createdAt, updatedAt, directionStudyId);
     }
 }

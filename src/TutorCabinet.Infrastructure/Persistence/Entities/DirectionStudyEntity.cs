@@ -1,5 +1,4 @@
 using TutorCabinet.Core.Entities;
-using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Core.Interfaces.Persistence;
 
 namespace TutorCabinet.Infrastructure.Persistence.Entities;
@@ -11,5 +10,7 @@ public class DirectionStudyEntity : IEntity
 {
     public Guid Id { get; init; }
     public string Name { get; init; } = null!;
-    public ICollection<StudentEntity>? Students { get; init; }
+    public ICollection<StudentEntity>? Students { get; set; }
+    public DateTime CreatedAt { get; init; }
+    public DateTime UpdatedAt { get; set; }
 }

@@ -11,7 +11,7 @@ public class DirectionStudyRepository(AppDbContext ctx)
 {
     protected override DirectionStudy ToDomain(DirectionStudyEntity entity)
     {
-        throw new NotImplementedException();
+        return DirectionStudy.Get(entity.Id, entity.Name, entity.CreatedAt, entity.UpdatedAt);
     }
 
     protected override DirectionStudyEntity ToEntity(DirectionStudy domain)

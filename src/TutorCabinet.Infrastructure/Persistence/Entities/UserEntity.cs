@@ -11,7 +11,7 @@ public class UserEntity : IEntity
     public Guid Id { get; init; }
     public string Email { get; set; } = null!;
     public string Name { get; set; } = null!;
+    public string PasswordHash { get; set; } = null!;
     public DateTime CreatedAt { get; init; }
     public DateTime UpdatedAt { get; set; }
-    public string PasswordHash { get; set; } = null!;
 }

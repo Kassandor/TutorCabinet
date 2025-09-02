@@ -13,5 +13,7 @@ public class StudentEntity : IEntity
     public string Name { get; init; } = null!;
     public int ClassNumber { get; init; }
     public Guid DirectionStudyId { get; init; }
-    public DirectionStudyEntity? DirectionStudy { get; init; }
+    public DirectionStudyEntity? DirectionStudy { get; set; }
+    public DateTime CreatedAt { get; init; }
+    public DateTime UpdatedAt { get; set; }
 }
