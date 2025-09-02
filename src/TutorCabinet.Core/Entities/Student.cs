@@ -31,12 +31,7 @@ public class Student : IDomain
         UpdatedAt = updatedAt;
     }
 
-    public static Student Create(
-        Guid id,
-        string name,
-        int classNumber,
-        Guid directionStudyId
-    )
+    public static Student Create(Guid id, string name, int classNumber, Guid directionStudyId)
     {
         var now = DateTime.UtcNow;
         return new Student(id, name, classNumber, now, now, directionStudyId);

@@ -26,7 +26,7 @@ public static class StudentMapper
             ClassNumber = domain.ClassNumber,
             CreatedAt = domain.CreatedAt,
             UpdatedAt = domain.UpdatedAt,
-            DirectionStudyId = domain.DirectionStudyId
+            DirectionStudyId = domain.DirectionStudyId,
         };
     }
 }

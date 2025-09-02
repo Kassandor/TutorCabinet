@@ -1,5 +1,4 @@
 using TutorCabinet.Application.DTOs;
-using TutorCabinet.Core.Entities;
 
 namespace TutorCabinet.Application.Interfaces;
 

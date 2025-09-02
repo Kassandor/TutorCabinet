@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TutorCabinet.Api.Models.Auth.Requests;
 
 /// <summary>

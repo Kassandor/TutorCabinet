@@ -1,5 +1,4 @@
 using TutorCabinet.Core.Entities;
-using TutorCabinet.Core.Interfaces;
 using TutorCabinet.Core.Interfaces.Persistence;
 
 namespace TutorCabinet.Infrastructure.Persistence.Entities;

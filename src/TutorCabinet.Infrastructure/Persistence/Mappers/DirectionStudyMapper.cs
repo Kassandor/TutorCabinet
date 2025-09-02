@@ -7,12 +7,7 @@ public static class DirectionStudyMapper
 {
     public static DirectionStudy ToDomain(this DirectionStudyEntity entity)
     {
-        return DirectionStudy.Get(
-            entity.Id,
-            entity.Name,
-            entity.CreatedAt,
-            entity.UpdatedAt
-        );
+        return DirectionStudy.Get(entity.Id, entity.Name, entity.CreatedAt, entity.UpdatedAt);
     }
 
     public static DirectionStudyEntity ToEntity(this DirectionStudy domain)

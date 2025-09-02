@@ -12,12 +12,7 @@ public class DirectionStudy : IDomain
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; }
 
-    private DirectionStudy(
-        Guid id,
-        string name,
-        DateTime createdAt,
-        DateTime updatedAt
-    )
+    private DirectionStudy(Guid id, string name, DateTime createdAt, DateTime updatedAt)
     {
         Id = id;
         Name = name;
@@ -31,12 +26,7 @@ public class DirectionStudy : IDomain
         return new DirectionStudy(id, name, now, now);
     }
 
-    public static DirectionStudy Get(
-        Guid id,
-        string name,
-        DateTime createdAt,
-        DateTime updatedAt
-    )
+    public static DirectionStudy Get(Guid id, string name, DateTime createdAt, DateTime updatedAt)
     {
         return new DirectionStudy(id, name, createdAt, updatedAt);
     }
